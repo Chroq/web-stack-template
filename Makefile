@@ -1,4 +1,4 @@
-.PHONY: default install start test
+.PHONY: default install start test stop
 
 .DEFAULT_GOAL := help
 SYMFONY_VERSION=5.*
@@ -15,7 +15,7 @@ start: ## Start project
 	@echo "Start the project"
 	SYMFONY_VERSION=${SYMFONY_VERSION} docker-compose up --build
 
-test: ## Stop all containers
+stop: ## Stop all containers
 	@echo "Stop all containers"
 	docker-compose down
 
