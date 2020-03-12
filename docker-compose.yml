@@ -1,38 +1,28 @@
-version: "3.4"
+version: '3'
 
 services:
-  php:
+
+  php-fpm:
     build:
-      context: ./api/
-      target: symfony_php
-      args:
-        SYMFONY_VERSION: ${SYMFONY_VERSION:-}
-        STABILITY: ${STABILITY:-stable}
-    healthcheck:
-      interval: 10s
-      timeout: 3s
-      retries: 3
-      start_period: 30s
-    volumes:
-      # Comment out the next line in production
-      - ./api:/srv/app:rw,cached
-      # If you develop on Linux, comment out the following volumes to just use bind-mounted project directory from host
-      # - /srv/app/var/
-      # - /srv/app/var/cache/
-      # - /srv/app/var/logs/
-      # - /srv/app/var/sessions/
+      context: ./php-fpm
+    depends_on:
+      - database
     environment:
-      - SYMFONY_VERSION
+      - APP_ENV=${APP_ENV}
+      - APP_SECRET=${APP_SECRET}
+    volumes:
+      - ../src:/var/www
 
   nginx:
     build:
-      context: ./api/
-      target: symfony_nginx
-    depends_on:
-      - php
+      context: ./nginx
     volumes:
-      # Comment out the next line in production
-      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./public:/srv/app/public:ro
+      - ../src:/var/www
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/sites/:/etc/nginx/sites-available
+      - ./nginx/conf.d/:/etc/nginx/conf.d
+      - ./logs:/var/log
+    depends_on:
+      - php-fpm
     ports:
       - "80:80"
