@@ -15,12 +15,12 @@ services:
       start_period: 30s
     volumes:
       # Comment out the next line in production
-      - ./:/srv/app:rw,cached
+      - ./api:/srv/app:rw,cached
       # If you develop on Linux, comment out the following volumes to just use bind-mounted project directory from host
-      - /srv/app/var/
-      - /srv/app/var/cache/
-      - /srv/app/var/logs/
-      - /srv/app/var/sessions/
+      # - /srv/app/var/
+      # - /srv/app/var/cache/
+      # - /srv/app/var/logs/
+      # - /srv/app/var/sessions/
     environment:
       - SYMFONY_VERSION
 
@@ -35,4 +35,4 @@ services:
       - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
       - ./public:/srv/app/public:ro
     ports:
-      - "8080:80"
+      - "80:80"
