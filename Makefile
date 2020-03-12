@@ -9,11 +9,11 @@ help:
 
 install: ## Install project's dependencies
 	@echo "Install project deps"
-	SYMFONY_VERSION=${SYMFONY_VERSION} docker-compose build
+	docker-compose build
 
 start: ## Start project
 	@echo "Start the project"
-	SYMFONY_VERSION=${SYMFONY_VERSION} docker-compose up --build
+	docker-compose up --build
 
 stop: ## Stop all containers
 	@echo "Stop all containers"
