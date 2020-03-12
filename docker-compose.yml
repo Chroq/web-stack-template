@@ -9,13 +9,13 @@ services:
       - APP_ENV=${APP_ENV}
       - APP_SECRET=${APP_SECRET}
     volumes:
-      - ./api:/var/www
+      - ./symfony:/var/www
 
   nginx:
     build:
       context: ./nginx
     volumes:
-      - ./api:/var/www
+      - ./symfony:/var/www
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/sites/:/etc/nginx/sites-available
       - ./nginx/conf.d/:/etc/nginx/conf.d
