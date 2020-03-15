@@ -1,4 +1,4 @@
-# Hex Stack
+# Web stack template
 
 ## Installation
 
