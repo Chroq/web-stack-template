@@ -13,8 +13,6 @@ services:
   go:
     build:
       context: ./go
-    ports:
-      - "8081:8081"
 
   nginx:
     build:
