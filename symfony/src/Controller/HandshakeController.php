@@ -7,6 +7,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Component\HttpClient\HttpClient;
+
+
 class HandshakeController
 {
 
@@ -24,6 +27,15 @@ class HandshakeController
      */
     public function goHandshake(Request $request): JsonResponse
     {
-        return new JsonResponse(['status' => 'Go Web Service is up and running.'], Response::HTTP_OK);
+        $client = HttpClient::create();
+        $response = $client->request('GET', 'http://go:8081/');
+
+        if($response->getStatusCode() === 200){
+            $status = 'Go Web Service is up and running.';
+        }else{
+            $status = 'Go Web Service is not reachable. Status code : ' . $response->getStatusCode();
+        }
+
+        return new JsonResponse(['status' => $status ], Response::HTTP_OK);
     }
 }
