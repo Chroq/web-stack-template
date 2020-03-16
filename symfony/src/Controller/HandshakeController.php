@@ -13,10 +13,17 @@ class HandshakeController
     /**
      * @Route("/handshake", name="get_handshake", methods={"GET"})
      */
-    public function add(Request $request): JsonResponse
+    public function handshake(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
-
         return new JsonResponse(['status' => 'Symfony REST API is up and running.'], Response::HTTP_OK);
+    }
+
+
+    /**
+     * @Route("/handshake/go", name="get_go_handshake", methods={"GET"})
+     */
+    public function goHandshake(Request $request): JsonResponse
+    {
+        return new JsonResponse(['status' => 'Go Web Service is up and running.'], Response::HTTP_OK);
     }
 }
