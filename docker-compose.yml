@@ -4,15 +4,30 @@ services:
   symfony:
     build:
       context: ./symfony
+    depends_on:
+      - "db"
     environment:
       - APP_ENV=${APP_ENV}
       - APP_SECRET=${APP_SECRET}
+      - DATABASE_URL="pgsql://postgres:password@db:5432/symfony"
     volumes:
       - ./symfony:/var/www/symfony
 
   go:
     build:
       context: ./go
+
+  db:
+    container_name: db
+    image: postgres:alpine
+    environment:
+      - POSTGRES_PASSWORD=password
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 18080:8080
 
   nginx:
     build:

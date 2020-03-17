@@ -1,8 +1,9 @@
 FROM php:fpm-alpine
 
-RUN apk --update --no-cache add git sqlite sqlite-dev 
+RUN apk --update --no-cache add git postgresql-dev
 
-RUN docker-php-ext-install pdo_sqlite
+RUN docker-php-ext-configure pgsql -with-pgsql=/usr/include/postgresql/
+RUN docker-php-ext-install pdo_pgsql
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
