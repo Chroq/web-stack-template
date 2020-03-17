@@ -9,7 +9,7 @@ services:
     environment:
       - APP_ENV=${APP_ENV}
       - APP_SECRET=${APP_SECRET}
-      - DATABASE_URL="pgsql://postgres:password@db:5432/symfony"
+      - DATABASE_URL=${DATABASE_URL}
     volumes:
       - ./symfony:/var/www/symfony
 

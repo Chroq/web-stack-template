@@ -15,6 +15,14 @@ start: ## Start project
 	@echo "Start the project"
 	docker-compose up --build
 
+db-create: ## Create the database
+	@echo "Create the database"
+	docker-compose run -e DATABASE_URL="pgsql://postgres:password@db:5432/symfony?serverVersion=12&charset=utf8" --rm symfony php bin/console doctrine:database:create
+
+db-migrations: ## Apply migrations
+	@echo "Apply migrations"
+	docker-compose run -e DATABASE_URL="pgsql://postgres:password@db:5432/symfony?serverVersion=12&charset=utf8" --rm symfony php bin/console doctrine:migrations:migrate
+
 stop: ## Stop all containers
 	@echo "Stop all containers"
 	docker-compose down
